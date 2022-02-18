@@ -1,0 +1,270 @@
+BASic EXERCISE sql 1
+
+
+1)Display all information in tables EMP and DEPT
+
+select* from employees
+select* from departments
+
+
+2)Display only hire date and employee name for each employee
+
+select hire_date,CONCAT(first_name,' ',last_name) as ename from employees
+
+o/p:
+hire_date        ename
+1987-06-17	Steven King
+1989-09-21	Neena Kochhar
+1993-01-13	Lex De Haan
+1990-01-03	Alexander Hunold
+1991-05-21	Bruce Ernst
+1997-06-25	David Austin
+1998-02-05	Valli Pataballa
+1999-02-07	Diana Lorentz
+1994-08-17	Nancy Greenberg
+1994-08-16	Daniel Faviet
+1997-09-28	John Chen
+
+3)Display the Ename concanated with job_Id,seprated by a comma and space name the column Employee and Title.
+
+
+
+
+
+4)Display the hire date ,name and department number for all clerks.
+
+ select e.hire_date,CONCAT(e.first_name,' ',e.last_name) as ename,department_id
+ from employees as e
+ where job_id in (select job_id from jobs where job_title like '%Clerk%' )
+
+0/p-
+hire_date        ename                department_id
+1995-05-18	Alexander Khoo	        3
+1997-12-24	Shelli Baida	        3
+1997-07-24	Sigal Tobias	        3
+1998-11-15	Guy Himuro	        3
+1999-08-10	Karen Colmenares	3
+1998-09-28	Irene Mikkilineni	5
+1996-02-04	Sarah Bell	        5
+1997-03-03	Britney Everett	        5
+
+------------------------------------------------------
+or second approch
+---------------------------
+
+select e.hire_date,CONCAT(e.first_name,' ',e.last_name) as ename,department_id,j.job_title,
+j.job_id from employees as e
+INNER JOIN jobs as j on e.job_id=j.job_id
+where j.job_title like '%Clerk%'
+
+o/p:
+
+1995-05-18	Alexander Khoo	        3	Purchasing Clerk	13
+1997-12-24	Shelli Baida	        3	Purchasing Clerk	13
+1997-07-24	Sigal Tobias	        3	Purchasing Clerk        13
+1998-11-15	Guy Himuro	        3	Purchasing Clerk	13
+1999-08-10	Karen Colmenares	3	Purchasing Clerk	13
+1998-09-28	Irene Mikkilineni	5	Stock Clerk	        18
+1996-02-04	Sarah Bell	     	5       Shipping Clerk	        17
+1997-03-03	Britney Everett  	5	Shipping Clerk	        17
+
+
+5) Create a querry to display all data from EMP table .
+   Seprate each column by a comma ,Name the column THE_OUTPUT
+
+select CONCAT(employee_id,',',first_name,',',last_name,',',email,',',phone_number,',',
+hire_date,',',job_id,',',salary,',',manager_id,',',department_id) 
+as THE_OUTPUT from employees 
+
+o/p:
+
+THE_OUTPUT
+100,Steven,King,steven.king@sqltutorial.org,515.123.4567,1987-06-17,4,24000.00,,9
+101,Neena,Kochhar,neena.kochhar@sqltutorial.org,515.123.4568,1989-09-21,5,17000.00,100,9
+102,Lex,De Haan,lex.de haan@sqltutorial.org,515.123.4569,1993-01-13,5,17000.00,100,9
+103,Alexander,Hunold,alexander.hunold@sqltutorial.org,590.423.4567,1990-01-03,9,9000.00,102,6
+104,Bruce,Ernst,bruce.ernst@sqltutorial.org,590.423.4568,1991-05-21,9,6000.00,103,6
+105,David,Austin,david.austin@sqltutorial.org,590.423.4569,1997-06-25,9,4800.00,103,6
+106,Valli,Pataballa,valli.pataballa@sqltutorial.org,590.423.4560,1998-02-05,9,4800.00,103,6
+107,Diana,Lorentz,diana.lorentz@sqltutorial.org,590.423.5567,1999-02-07,9,4200.00,103,6
+108,Nancy,Greenberg,nancy.greenberg@sqltutorial.org,515.124.4569,1994-08-17,7,12000.00,101,10
+109,Daniel,Faviet,daniel.faviet@sqltutorial.org,515.124.4169,1994-08-16,6,9000.00,108,10
+110,John,Chen,john.chen@sqltutorial.org,515.124.4269,1997-09-28,6,8200.00,108,10
+111,Ismael,Sciarra,ismael.sciarra@sqltutorial.org,515.124.4369,1997-09-30,6,7700.00,108,10
+112,Jose Manuel,Urman,jose manuel.urman@sqltutorial.org,515.124.4469,1998-03-07,6,7800.00,108,10
+113,Luis,Popp,luis.popp@sqltutorial.org,515.124.4567,1999-12-07,6,6900.00,108,10
+
+
+6)Display the names and salaries of the employees with salary greater than 2000;
+
+ select CONCAT(first_name,' ',last_name)as ename,salary from employees 
+ where salary>2000
+
+o/p:
+ename                   salary
+Steven King	        24000.00
+Neena Kochhar	        17000.00
+Lex De Haan	        17000.00
+Alexander Hunold	9000.00
+Bruce Ernst	        6000.00
+David Austin	        4800.00
+Valli Pataballa	        4800.00
+Diana Lorentz	        4200.00
+Nancy Greenberg	        12000.00
+Daniel Faviet	        9000.00
+John Chen	        8200.00
+
+
+7)Display the names and dates of employees with the column headers 'Name' and 'startDate' ;
+
+select CONCAT(first_name,' ',last_name) as Name,hire_date as 'Start Date' from employees
+
+
+o/p:
+Name                    Start Date
+Steven King	        1987-06-17
+Neena Kochhar	        1989-09-21
+Lex De Haan	        1993-01-13
+Alexander Hunold	1990-01-03
+Bruce Ernst	        1991-05-21
+David Austin	        1997-06-25
+Valli Pataballa	        1998-02-05
+Diana Lorentz	        1999-02-07
+Nancy Greenberg	        1994-08-17
+Daniel Faviet	        1994-08-16
+John Chen	        1997-09-28
+
+
+8) Display the names and hire dates of all  employees in the order they were hired;
+
+ select hire_date as 'Start Date',CONCAT(first_name,' ',last_name) as Name from employees
+ order by hire_date
+
+o/p:
+Start Date      Name
+1987-06-17	Steven King
+1987-09-17	Jennifer Whalen
+1989-09-21	Neena Kochhar
+1990-01-03	Alexander Hunold
+1991-05-21	Bruce Ernst
+1993-01-13	Lex De Haan
+1994-06-07	Susan Mavris
+1994-06-07	Hermann Baer
+1994-06-07	Shelley Higgins
+1994-06-07	William Gietz
+1994-08-16	Daniel Faviet
+
+
+9) Display the names and salaries of all employees in reverse salary order;
+
+
+ select salary,CONCAT(first_name,' ',last_name) as Name from employees
+ order by  salary DESC
+
+o/p:
+
+salary          Name 
+24000.00	Steven King
+17000.00	Neena Kochhar
+17000.00	Lex De Haan
+14000.00	John Russell
+13500.00	Karen Partners
+13000.00	Michael Hartstein
+12000.00	Shelley Higgins
+12000.00	Nancy Greenberg
+11000.00	Den Raphaely
+10000.00	Hermann Baer
+9000.00	        Daniel Faviet
+
+
+10)Display 'ename' and 'deptno' who are all earned comission and 
+   Display salary in reverse order;
+
+ select CONCAT(first_name,' ',last_name) as ename,department_id as deptno,salary from employees as e 
+ inner join jobs as j on j.job_id=e.job_id
+ where salary>min_salary
+ order by  salary DESC
+
+o/p: 
+
+ename                deptno             salary
+Steven King	        9	        24000.00
+Neena Kochhar	        9	        17000.00
+Lex De Haan	        9	        17000.00
+John Russell	        8	        14000.00
+Karen Partners	        8	        13500.00
+Michael Hartstein	2	        13000.00
+Shelley Higgins	        11	        12000.00
+Nancy Greenberg	        10	        12000.00
+Den Raphaely	        3	        11000.00
+Hermann Baer	        7	        10000.00
+Daniel Faviet	        10	        9000.00
+
+
+
+11)Display the last name and job title of all the employees who do not have a manager.
+
+
+ select last_name,job_title from employees e
+ inner join jobs as j on j.job_id=e.job_id
+ where j.job_title not like '%Manager%'
+
+o/p:
+
+last_name       job_title 
+King	        President
+Kochhar	        Administration Vice President
+De Haan	        Administration Vice President
+Hunold	        Programmer
+Ernst	        Programmer
+Austin	        Programmer
+Pataballa	Programmer
+Lorentz	        Programmer
+Faviet	        Accountant
+Chen	        Accountant
+Sciarra	        Accountant
+
+
+12)Display the last name , job and salary for all employees whose job is sales representive or stock clerk 
+   and salary is not equal to $2500,$3500 or $5000;
+
+ select last_name,job_title,salary from employees e
+ inner join jobs as j on j.job_id=e.job_id
+ where job_title in ('Sales Representative','Stock Clerk') and salary not in (2500,3500,5000)
+
+
+o/p:
+
+last_name       job_title               salary
+Mikkilineni	Stock Clerk	        2700.00
+Taylor	        Sales Representative	8600.00
+Livingston	Sales Representative	8400.00
+Grant	        Sales Representative	7000.00
+Johnson	        Sales Representative	6200.00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
